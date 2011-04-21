@@ -614,6 +614,10 @@ service hdmid /system/bin/hdmid
     group system
     disabled
 
+service nvrm_daemon /system/bin/nvrm_daemon
+    user root
+    #onrestart restart servicemanager
+
 on property:dev.bootcomplete=1
     start hdmid
 
