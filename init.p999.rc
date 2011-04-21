@@ -1,0 +1,620 @@
+on early-init
+    start ueventd
+
+on init
+
+sysclktz 0
+
+loglevel 3
+
+# setup the global environment
+    export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
+    export LD_LIBRARY_PATH /vendor/lib:/system/lib
+    export ANDROID_BOOTLOGO 1
+    export ANDROID_CACHE /cache
+    export ANDROID_ROOT /system
+    export ANDROID_ASSETS /system/app
+    export ANDROID_DATA /data
+    export DOWNLOAD_CACHE /cache/download
+    export EXTERNAL_STORAGE /mnt/sdcard
+    export ASEC_MOUNTPOINT /mnt/asec
+    export LOOP_MOUNTPOINT /mnt/obb
+    export SD_EXT_DIRECTORY /sd-ext
+    export BOOTCLASSPATH /system/framework/core.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/core-junit.jar
+    export TMPDIR /data/local/tmp
+    export PHONE_STORAGE /mnt/emmc
+
+# Backward compatibility
+    symlink /system/etc /etc
+    symlink /system/bin /bin
+    symlink /sys/kernel/debug /d
+
+# Right now vendor lives on the same filesystem as system,
+# but someday that may change.
+    symlink /system/vendor /vendor
+
+# create mountpoints
+    mkdir /mnt 0775 root system
+    mkdir /mnt/sdcard 0000 system system
+
+# create mountpoints for internal "SD"
+    mkdir /mnt/emmc 0000 system system
+
+# Create cgroup mount point for cpu accounting
+    mkdir /acct
+    mount cgroup none /acct cpuacct
+    mkdir /acct/uid
+
+# Backwards Compat - XXX: Going away in G*
+    symlink /mnt/sdcard /sdcard
+
+    mkdir /system 0771 root root
+    mkdir /data 0771 system system
+
+## JAEWOO BLUETOOTH
+    mkdir /nvdb 0770 net_bt_admin net_bt_admin
+## JAEWOO BLUETOOTH
+
+    mkdir /cache 0770 system cache
+    mkdir /config 0500 root root
+
+    # Directory for putting things only root should see.
+    mkdir /mnt/secure 0700 root root
+
+    # Directory for staging bindmounts
+    mkdir /mnt/secure/staging 0700 root root
+
+    # Directory-target for where the secure container
+    # imagefile directory will be bind-mounted
+    mkdir /mnt/secure/asec  0700 root root
+
+#20100722, taein.kim@lge.com, Add external security folder [START]
+    mkdir /mnt/extsecure 0700 root root
+    mkdir /mnt/extsecure/staging 0700 root root
+    mkdir /mnt/extsecure/extasec  0700 root root
+#20100722, taein.kim@lge.com, Add external security folder [END]
+    # Secure container public mount points.
+    mkdir /mnt/asec  0700 root system
+    mount tmpfs tmpfs /mnt/asec mode=0755,gid=1000 noatime
+#20100722, taein.kim@lge.com, Add external security folder [START]
+    mkdir /mnt/extasec  0700 root system
+    mount tmpfs tmpfs /mnt/extasec mode=0755,gid=1000 noatime
+#20100722, taein.kim@lge.com, Add external security folder [END]
+
+    mkdir /mnt/usbdisk 0000 system system
+    symlink /mnt/usbdisk usbdisk
+
+    # Filesystem image public mount points.
+    mkdir /mnt/obb 0700 root system
+    mount tmpfs tmpfs /mnt/obb mode=0755,gid=1000
+
+    mkdir /sd-ext 0771 system system
+
+    write /proc/sys/kernel/panic_on_oops 1
+    # 20100803 taewan.kim@lge.com reboot in kernel panic
+    write /proc/sys/kernel/panic 1
+    write /proc/sys/kernel/hung_task_timeout_secs 0
+    write /proc/cpu/alignment 4
+    write /proc/sys/kernel/sched_latency_ns 10000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
+    write /proc/sys/kernel/sched_compat_yield 1
+    write /proc/sys/kernel/sched_child_runs_first 0
+
+# Create cgroup mount points for process groups
+    mkdir /dev/cpuctl
+    mount cgroup none /dev/cpuctl cpu
+    chown system system /dev/cpuctl
+    chown system system /dev/cpuctl/tasks
+    chmod 0777 /dev/cpuctl/tasks
+    write /dev/cpuctl/cpu.shares 1024
+
+    mkdir /dev/cpuctl/fg_boost
+    chown system system /dev/cpuctl/fg_boost/tasks
+    chmod 0777 /dev/cpuctl/fg_boost/tasks
+    write /dev/cpuctl/fg_boost/cpu.shares 1024
+
+    mkdir /dev/cpuctl/bg_non_interactive
+    chown system system /dev/cpuctl/bg_non_interactive/tasks
+    chmod 0777 /dev/cpuctl/bg_non_interactive/tasks
+    # 5.0 %
+    write /dev/cpuctl/bg_non_interactive/cpu.shares 52
+
+on fs
+# mount partitions
+    mount ext3 /dev/block/mmcblk0p1 /system barrier=1 wait 
+    mount ext3 /dev/block/mmcblk0p1 /system ro barrier=1 noatime remount wait
+    # We chown/chmod /data again so because mount is run as root + defaults
+    mount ext3 /dev/block/mmcblk0p7 /data nosuid nodev noatime data=ordered wait
+    chown system system /data
+    chmod 0771 /data
+    mount ext3 /dev/block/mmcblk0p2 /cache nosuid nodev noatime wait
+    chown system cache /cache
+    chmod 0770 /cache
+    mount ext3 /dev/block/mmcblk0p6 /nvdb nosuid nodev barrier=1 wait
+    chown net_bt_admin net_bt_admin /nvdb
+    chmod 0770 /nvdb
+
+on post-fs
+    # once everything is setup, no need to modify /
+    mount rootfs rootfs / ro remount
+
+    # We chown/chmod /data again so because mount is run as root + defaults
+    chown system system /data
+    chmod 0771 /data
+
+    # Create dump dir and collect dumps.
+    # Do this before we mount cache so eventually we can use cache for
+    # storing dumps on platforms which do not have a dedicated dump partition.
+
+    mkdir /data/dontpanic
+    chown root log /data/dontpanic
+    chmod 0750 /data/dontpanic
+
+    # Collect apanic data, free resources and re-arm trigger
+    copy /proc/apanic_console /data/dontpanic/apanic_console
+    chown root log /data/dontpanic/apanic_console
+    chmod 0640 /data/dontpanic/apanic_console
+
+    copy /proc/apanic_threads /data/dontpanic/apanic_threads
+    chown root log /data/dontpanic/apanic_threads
+    chmod 0640 /data/dontpanic/apanic_threads
+
+    write /proc/apanic_console 1
+
+    # Same reason as /data above
+    chown system cache /cache
+    chmod 0771 /cache
+
+    # This may have been created by the recovery system with odd permissions
+    chown system cache /cache/recovery
+    chmod 0770 /cache/recovery
+
+    #change permissions on vmallocinfo so we can grab it from bugreports
+    chown root log /proc/vmallocinfo
+    chmod 0440 /proc/vmallocinfo
+
+#20100720, hyeseung.ryu@lge.com, Hidden Menu: Enable/Disable Root Permission [START]
+    mkdir /data/nv  
+    chown system system /data/nv    
+    chmod 0711 /data/nv
+#20100720, hyeseung.ryu@lge.com, Hidden Menu: Enable/Disable Root Permission [END]
+    #change permissions on kmsg & sysrq-trigger so bugreports can grab kthread stacks
+    chown root system /proc/kmsg
+    chmod 0440 /proc/kmsg
+    chown root system /proc/sysrq-trigger
+    chmod 0220 /proc/sysrq-trigger
+
+# create basic filesystem structure
+    mkdir /data/misc 01771 system misc
+    mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
+    mkdir /data/misc/bluetooth 0770 system system
+    mkdir /data/misc/keystore 0700 keystore keystore
+    mkdir /data/misc/vpn 0770 system system
+    mkdir /data/misc/systemkeys 0700 system system
+    mkdir /data/misc/vpn/profiles 0770 system system
+    # give system access to wpa_supplicant.conf for backup and restore
+
+    mkdir /data/misc/wifi 0777 wifi wifi
+    chmod 0777 /data/misc/wifi
+    chmod 0660 /data/misc/wifi/wpa_supplicant.conf
+    chmod 0777 /data/misc/wifi/config_mac   # 20101202 mingi.sung@lge.com [WLAN] AT command - MAC address read/write function
+
+# 20100716 mingi.sung@lge.com <make wifi directory> [START]
+# WIFI
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    chmod 0777 /system/etc/dhcpcd/dhcpcd-run-hooks
+
+# DHCP
+    mkdir /data/misc/dhcp 0777 system system
+# 20100716 mingi.sung@lge.com <make wifi directory> [END]
+
+    mkdir /data/local 0771 shell shell
+    mkdir /data/local/tmp 0771 shell shell
+    mkdir /data/data 0771 system system
+    mkdir /data/app-private 0771 system system
+    mkdir /data/app 0771 system system
+    mkdir /data/property 0700 root root
+
+    # create dalvik-cache and double-check the perms
+    mkdir /data/dalvik-cache 0771 system system
+    chown system system /data/dalvik-cache
+    chmod 0771 /data/dalvik-cache
+
+    mkdir /cache/dalvik-cache 0771 system system
+    chown system system /cache/dalvik-cache
+    chmod 0771 /cache/dalvik-cache
+
+    # create the lost+found directories, so as to enforce our permissions
+    mkdir /data/lost+found 0770
+    mkdir /cache/lost+found 0770
+
+    # double check the perms, in case lost+found already exists, and set owner
+    chown root root /data/lost+found
+    chmod 0770 /data/lost+found
+    chown root root /cache/lost+found
+    chmod 0770 /cache/lost+found
+
+    # allow net_raw to have access to /dev/socket directory
+    chown root net_raw /dev/socket
+    chmod 0775 /dev/socket
+
+    # allow system to modify cpufreq control files
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+# 20101115, taein.kim@lge.com, make ringtone,alarm property directory [START]
+    mkdir /data/audioprop 0777 system system
+# 20101115, taein.kim@lge.com, make ringtone,alarm property directory [END]
+
+on boot
+# basic network init
+    ifup lo
+    hostname localhost
+    domainname localdomain
+
+# set RLIMIT_NICE to allow priorities from 19 to -20
+    setrlimit 13 40 40
+
+# Define the oom_adj values for the classes of processes that can be
+# killed by the kernel.  These are used in ActivityManagerService.
+    setprop ro.FOREGROUND_APP_ADJ 0
+    setprop ro.VISIBLE_APP_ADJ 1
+    setprop ro.SECONDARY_SERVER_ADJ 2
+    setprop ro.BACKUP_APP_ADJ 2
+    setprop ro.HOME_APP_ADJ 4
+    setprop ro.HIDDEN_APP_MIN_ADJ 10
+    setprop ro.CONTENT_PROVIDER_ADJ 14
+    setprop ro.EMPTY_APP_ADJ 15
+
+# Define the memory thresholds at which the above process classes will
+# be killed.  These numbers are in pages (4k).
+    #setprop ro.FOREGROUND_APP_MEM 1536
+    #setprop ro.VISIBLE_APP_MEM 2048
+    #setprop ro.SECONDARY_SERVER_MEM 4096
+    #setprop ro.BACKUP_APP_MEM 4096
+    #setprop ro.HOME_APP_MEM 4096
+    #setprop ro.HIDDEN_APP_MEM 5120
+    #setprop ro.CONTENT_PROVIDER_MEM 5632
+    #setprop ro.EMPTY_APP_MEM 6144
+    setprop ro.FOREGROUND_APP_MEM 1536
+    setprop ro.VISIBLE_APP_MEM 2048
+    setprop ro.SECONDARY_SERVER_MEM 3072
+    setprop ro.BACKUP_APP_MEM 3072
+    setprop ro.HOME_APP_MEM 3072
+    setprop ro.HIDDEN_APP_MEM 15360
+    setprop ro.CONTENT_PROVIDER_MEM 17920
+    setprop ro.EMPTY_APP_MEM 25600
+# Sensor AMI304
+    # setprop ro.hardware AMIT
+# Sensor MPU3050
+    setprop ro.hardware MOTION
+
+# Write value must be consistent with the above properties.
+# Note that the driver only supports 6 slots, so we have HOME_APP at the
+# same memory level as services.
+    write /sys/module/lowmemorykiller/parameters/adj 0,1,2,7,12,13
+
+    write /proc/sys/vm/overcommit_memory 1
+    write /proc/sys/vm/min_free_order_shift 4
+    # 6M,8M,12M,24M,36M,48M
+    # write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,3072,6144,9216,12288
+    # 6M,8M,20M,36M,48M,60M by byunggyu.kim@lge.com 20110324
+    write /sys/module/lowmemorykiller/parameters/minfree 1536,2048,5120,9216,12288,15360
+    
+    # Set init its forked children's oom_adj.
+    write /proc/1/oom_adj -16
+
+    # Tweak background writeout
+    write /proc/sys/vm/dirty_expire_centisecs 200
+    write /proc/sys/vm/dirty_background_ratio  5
+
+    # Permissions for System Server and daemons.
+    chown radio system /sys/android_power/state
+    chown radio system /sys/android_power/request_state
+    chown radio system /sys/android_power/acquire_full_wake_lock
+    chown radio system /sys/android_power/acquire_partial_wake_lock
+    chown radio system /sys/android_power/release_wake_lock
+    chown radio system /sys/power/state
+    chown radio system /sys/power/wake_lock
+    chown radio system /sys/power/wake_unlock
+    chmod 0660 /sys/power/state
+    chmod 0660 /sys/power/wake_lock
+    chmod 0660 /sys/power/wake_unlock
+    chown system system /sys/class/timed_output/vibrator/enable
+    chown system system /sys/class/leds/keyboard-backlight/brightness
+    chown system system /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/button-backlight/brightness
+    chown system system /sys/class/leds/jogball-backlight/brightness
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/red/device/grpfreq
+    chown system system /sys/class/leds/red/device/grppwm
+    chown system system /sys/class/leds/red/device/blink
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/red/device/grpfreq
+    chown system system /sys/class/leds/red/device/grppwm
+    chown system system /sys/class/leds/red/device/blink
+    chown system system /sys/class/timed_output/vibrator/enable
+    chown system system /sys/module/sco/parameters/disable_esco
+    chown system system /sys/kernel/ipv4/tcp_wmem_min
+    chown system system /sys/kernel/ipv4/tcp_wmem_def
+    chown system system /sys/kernel/ipv4/tcp_wmem_max
+    chown system system /sys/kernel/ipv4/tcp_rmem_min
+    chown system system /sys/kernel/ipv4/tcp_rmem_def
+    chown system system /sys/kernel/ipv4/tcp_rmem_max
+    chown root radio /proc/cmdline
+# set properties for pppd demon
+    chmod 0777 /system/bin/pppd
+    chown root radio /system/bin/pppd
+# LGE_MPDP START
+    chmod 0777 /etc/init.gprs-pppd
+    chown root radio /etc/init.gprs-pppd
+# LGE_MPDP END
+    chmod 0777 /etc/ppp/ip-down
+    chown root radio /etc/ppp/ip-down
+    chmod 0777 /etc/ppp/ip-up
+    chown root radio /etc/ppp/ip-up
+
+# 20101107, sglee76@lge.com, FOTA [START]
+    mkdir /data/fota 0777 system system
+    chown system system /data/fota
+    chmod 0777 /data/fota
+
+    chmod 777 /dev/block/mmcblk0p3
+# 20110128, sunggeun.lee@lge.com, kernel read permission
+    chmod 644 /dev/block/mmcblk0p5
+# 20101107, sglee76@lge.com, FOTA [END]
+
+# USB mode, soondong.park@lge.com, 2010/08/11
+   chown system system /sys/module/g_android/parameters/product_id
+
+# Define sensor settings
+    chown system system /sys/devices/platform/tegra_gyro_accel/tilt_onoff
+    chown system system /sys/devices/platform/tegra_gyro_accel/tap_onoff
+    chown system system /sys/devices/platform/tegra_gyro_accel/shake_onoff
+    chown system system /sys/devices/platform/tegra_gyro_accel/snap_onoff
+    chown system system /sys/devices/platform/tegra_gyro_accel/flip_onoff
+    chown system system /sys/devices/platform/tegra_gyro_accel/tilt_delay
+    chown system system /sys/devices/platform/tegra_gyro_accel/bootcomplete
+
+# Define TCP buffer sizes for various networks
+#   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 4096,87380,196608,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    4096,87380,393216,4096,16384,110208
+    setprop net.tcp.buffersize.umts    4096,87380,393216,4096,16384,110208
+    setprop net.tcp.buffersize.edge    4096,26280,393216,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4096,8760,393216,4096,8760,11680
+    setprop net.tcp.buffersize.hspa    4096,87380,393216,4096,16384,110208
+
+## LGE's bluetooth stuff
+# bluetooth permissions
+    chmod 0660 /dev/ttyHS2
+    chown bluetooth bluetooth /dev/ttyHS2
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/type
+    chmod 0660 /sys/class/rfkill/rfkill1/state
+    chmod 0660 /sys/class/rfkill/rfkill1/type
+
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill1/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill1/type
+    chmod 0666 /sys/devices/platform/star_bd_address/bdaddr_if
+    write /sys/class/rfkill/rfkill0/state 0
+### End of LGE bluetooth
+
+    class_start default
+    
+# Define modem related settings
+    setprop ro.radio.use-ppp yes
+
+    setprop wifi.supplicant_scan_interval 20
+    setprop wifi.interface wlan0
+
+## Daemon processes to be run by init.
+##
+service console /system/bin/sh
+    console
+
+# adbd is controlled by the persist.service.adb.enable system property
+service adbd /sbin/adbd
+    disabled
+
+# adbd on at boot in emulator
+on property:ro.kernel.qemu=1
+    start adbd
+
+on property:persist.service.adb.enable=1
+    start adbd
+
+on property:persist.service.adb.enable=0
+    stop adbd
+
+service servicemanager /system/bin/servicemanager
+    user system
+    critical
+    onrestart restart zygote
+    onrestart restart media
+# indal.choi@lge.com added fatal option. if a process with fatal option died, init process reboot the system immediately.
+# * -> the other options is ignored.
+    fatal
+
+service vold /system/bin/vold
+    socket vold stream 0660 root mount
+    ioprio be 2
+
+service netd /system/bin/netd
+    socket netd stream 0660 root system
+
+service debuggerd /system/bin/debuggerd
+
+#service ril-daemon /system/bin/rild
+#    socket rild stream 660 root radio
+#    socket rild-debug stream 660 radio system
+#    user root
+#    group radio cache inet misc audio
+
+service ril-daemon /system/bin/rild -l /system/lib/librilswitch.so -- -d /dev/ttyspi0
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio wifi
+
+service rawip_vsnet1 /bin/init.vsnet 1
+   user root
+   group radio cache inet misc
+   disabled
+   oneshot
+
+service pppd_gprs /etc/init.gprs-pppd
+   user root
+   group radio cache inet misc
+   disabled
+   oneshot
+
+service pppd_gprs1 /etc/init.gprs-pppd 1
+   user root
+   group radio cache inet misc
+   disabled
+   oneshot
+
+# Daemon for Gyro Sensor
+service motion /system/bin/motion
+    user system
+    group system
+    oneshot
+    disabled
+
+on property:dev.bootcomplete=1
+    start motion
+
+service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
+    socket zygote stream 666
+# indal.choi@lge.com added fatal option. if a process with fatal option died, init process reboot the system immediately.
+# * -> the other options is ignored.
+    fatal
+    onrestart write /sys/android_power/request_state wake
+    onrestart write /sys/power/state on
+    onrestart restart media
+
+service media /system/bin/mediaserver
+    user media
+    group system audio camera graphics inet net_bt net_bt_admin net_raw
+    ioprio rt 4
+# indal.choi@lge.com added fatal option. if a process with fatal option died, init process reboot the system immediately.
+# * -> the other options is ignored.
+#   fatal
+
+
+service bootanim /system/bin/bootanimation
+    user graphics
+    group graphics
+    disabled
+    oneshot
+
+service dbus /system/bin/dbus-daemon --system --nofork
+    socket dbus stream 660 bluetooth bluetooth
+    user bluetooth
+    group bluetooth net_bt_admin
+
+service bluetoothd /system/bin/bluetoothd -n
+    socket bluetooth stream 660 bluetooth bluetooth
+    socket dbus_bluetooth stream 660 bluetooth bluetooth
+    # init.rc does not yet support applying capabilities, so run as root and
+    # let bluetoothd drop uid to bluetooth with the right linux capabilities
+    group bluetooth net_bt_admin misc
+    disabled
+
+service hfag /system/bin/sdptool add --channel=10 HFAG
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service hsag /system/bin/sdptool add --channel=11 HSAG
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service opush /system/bin/sdptool add --channel=12 OPUSH
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service pbap /system/bin/sdptool add --channel=19 PBAP
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf #-dd
+    socket wpa_wlan0 dgram 660 wifi wifi
+    group system wifi inet
+    disabled
+    oneshot
+
+service dhcpcd /system/bin/dhcpcd -BKA wlan0  # LGE_AUTO_IP - enable IPv4LL & ARP (DLNA, 2010.10.19)
+    disabled
+    oneshot
+
+on property:init.svc.wpa_supplicant=stopped
+    stop dhcpcd
+
+service installd /system/bin/installd
+    socket installd stream 600 system system
+
+service racoon /system/bin/racoon
+    socket racoon stream 600 system system
+    # racoon will setuid to vpn after getting necessary resources.
+    group net_admin
+    disabled
+    oneshot
+
+service mtpd /system/bin/mtpd
+    socket mtpd stream 600 system system
+    user vpn
+    group vpn net_admin net_raw
+    disabled
+    oneshot
+
+service keystore /system/bin/keystore /data/misc/keystore
+    user keystore
+    group keystore
+    socket keystore stream 666
+
+service dumpstate /system/bin/dumpstate -s
+    socket dumpstate stream 0660 shell log
+    disabled
+    oneshot
+
+# LGE_SIGNALING START
+service signaling_c /system/bin/lge_signaling_d -d /dev/pts18
+    socket lge_signaling stream 660 radio system
+    user radio
+    group radio cache inet misc
+# LGE_SIGNALING END
+
+#100725, gunwoo1.kim@lge.com, HDMI daemon [START]
+service hdmid /system/bin/hdmid
+    user system
+    group system
+    disabled
+
+on property:dev.bootcomplete=1
+    start hdmid
+
+service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm \
+    --baudrate 3000000 --patchram /etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd /dev/ttyHS2
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+

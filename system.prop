@@ -1,0 +1,22 @@
+#
+# system.prop for p999
+#
+rild.libpath=/system/lib/lge-ril.so
+rild.libargs=-d /dev/ttyspi0
+
+ro.sf.lcd_density=240
+
+mobiledata.interfaces=vsnet0,vsnet1,vsnet2,vsnet3
+
+# We can afford the 32m
+dalvik.vm.heapsize=32m
+
+# hold precise GC data, and use SMP
+dalvik.vm.dexopt-flags=m=y,u=n
+
+# Mount the internal SD card, too
+ro.additionalmounts=/mnt/emmc
+
+# GSM, WCDMA preferred
+# This appears to be causing "Unknown" network type
+#ro.telephony.default_network=0
