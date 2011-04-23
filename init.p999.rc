@@ -455,17 +455,17 @@ service netd /system/bin/netd
 
 service debuggerd /system/bin/debuggerd
 
-#service ril-daemon /system/bin/rild
-#    socket rild stream 660 root radio
-#    socket rild-debug stream 660 radio system
-#    user root
-#    group radio cache inet misc audio
-
-service ril-daemon /system/bin/rild -l /system/lib/librilswitch.so -- -d /dev/ttyspi0
+service ril-daemon /system/bin/rild
     socket rild stream 660 root radio
     socket rild-debug stream 660 radio system
     user root
-    group radio cache inet misc audio wifi
+    group radio cache inet misc audio
+
+#service ril-daemon /system/bin/rild -l /system/lib/librilswitch.so -- -d /dev/ttyspi0
+#    socket rild stream 660 root radio
+#    socket rild-debug stream 660 radio system
+#    user root
+#    group radio cache inet misc audio wifi
 
 service rawip_vsnet1 /bin/init.vsnet 1
    user root
