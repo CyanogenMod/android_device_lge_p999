@@ -210,10 +210,13 @@ on post-fs
 
     mkdir /data/local 0771 shell shell
     mkdir /data/local/tmp 0771 shell shell
+    mkdir /data/local/download 0771 system cache
     mkdir /data/data 0771 system system
     mkdir /data/app-private 0771 system system
     mkdir /data/app 0771 system system
     mkdir /data/property 0700 root root
+
+    mkdir /cache/download 0771 system cache
 
     # create dalvik-cache and double-check the perms
     mkdir /data/dalvik-cache 0771 system system
