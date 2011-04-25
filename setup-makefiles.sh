@@ -99,8 +99,8 @@ PRODUCT_COPY_FILES += \\
 
 # GPS
 PRODUCT_COPY_FILES += \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge-gps.so:obj/lib/libgps.so \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge-gps.so:system/lib/libgps.so
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge-gps.so:obj/lib/liblge-gps.so \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge-gps.so:system/lib/liblge-gps.so
 
 # OMX
 PRODUCT_COPY_FILES += \\
@@ -120,6 +120,7 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/etc/flex/flex.db:system/etc/flex/flex.db \\
     vendor/__VENDOR__/__DEVICE__/proprietary/etc/flex/flex.xml:system/etc/flex/flex.xml \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/BCM4329B1_002.002.023.0735.0745.hcd:system/etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/bin/lge_signaling_d:system/bin/lge_signaling_d \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/motion:system/bin/motion \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvrm_daemon:system/bin/nvrm_daemon \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvrm_avp.axf:system/bin/nvrm_avp.axf \\

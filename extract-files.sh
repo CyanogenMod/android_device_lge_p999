@@ -57,6 +57,7 @@ adb pull /system/lib/libbridge.so ../../../vendor/$VENDOR/$DEVICE/proprietary/li
 adb pull /system/etc/flex/flex.db ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 adb pull /system/etc/flex/flex.xml ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 adb pull /system/bin/BCM4329B1_002.002.023.0735.0745.hcd ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+adb pull /system/bin/lge_signaling_d ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/motion ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/nvrm_daemon ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/nvrm_avp.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
