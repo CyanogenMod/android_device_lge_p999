@@ -49,12 +49,10 @@ adb pull /system/etc/pvnvomx.cfg ../../../vendor/$VENDOR/$DEVICE/proprietary/etc
 adb pull /system/lib/libpvnvomx.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libdivxdrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/liblge_divxdrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
-adb pull /system/lib/libtsparser.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvodm_dtvtuner.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libhwmediaplugin.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libhwmediarecorder.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libstagefrighthw.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
-adb pull /system/lib/libsecureclock.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libbridge.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/etc/flex/flex.db ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 adb pull /system/etc/flex/flex.xml ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
@@ -84,12 +82,7 @@ adb pull /system/bin/nvmm_adtsdec.axf ../../../vendor/$VENDOR/$DEVICE/proprietar
 adb pull /system/bin/nvmm_aacdec.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/nvddk_audiofx_transport.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/nvddk_audiofx_core.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
-adb pull /system/bin/lgospd_hid ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
-adb pull /system/bin/lgospd ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
-adb pull /system/bin/lgdrmserver ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
-adb pull /system/bin/immvibed ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/hdmid ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
-adb pull /system/bin/btld ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/bridgeutil ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/lib/libril.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvos.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
@@ -116,7 +109,6 @@ adb pull /system/lib/libnvdispatch_helper.so ../../../vendor/$VENDOR/$DEVICE/pro
 adb pull /system/lib/libnvomxilclient.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvmm_logger.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libcgdrv.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
-adb pull /system/lib/liblgdrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvmm_audio.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvmm_contentpipe.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvmm_image.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib

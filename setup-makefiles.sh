@@ -105,16 +105,14 @@ PRODUCT_COPY_FILES += \\
 # OMX
 PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/etc/pvnvomx.cfg:system/etc/pvnvomx.cfg \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libpvnvomx.so:system/lib/libpvnvomx.s \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libpvnvomx.so:system/lib/libpvnvomx.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libdivxdrm.so:system/lib/libdivxdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge_divxdrm.so:system/lib/liblge_divxdrm.so \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libtsparser.so:system/lib/libtsparser.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libhwmediaplugin.so:system/lib/libhwmediaplugin.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libhwmediaplugin.so:obj/lib/libhwmediaplugin.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libhwmediarecorder.so:system/lib/libhwmediarecorder.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libhwmediarecorder.so:obj/lib/libhwmediarecorder.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libstagefrighthw.so:system/lib/libstagefrighthw.so \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/secureclockd:system/bin/secureclockd \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libsecureclock.so:system/lib/libsecureclock.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libbridge.so:system/lib/libbridge.so
 
@@ -147,12 +145,7 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvmm_aacdec.axf:system/bin/nvmm_aacdec.axf \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvddk_audiofx_transport.axf:system/bin/nvddk_audiofx_transport.axf \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvddk_audiofx_core.axf:system/bin/nvddk_audiofx_core.axf \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/lgospd_hid:system/bin/lgospd_hid \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/lgospd:system/bin/lgospd \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/lgdrmserver:system/bin/lgdrmserver \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/immvibed:system/bin/immvibed \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/hdmid:system/bin/hdmid \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/btld:system/bin/btld \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/bridgeutil:system/bin/bridgeutil \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libril.so:system/lib/libril.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvos.so:system/lib/libnvos.so \\
@@ -179,7 +172,6 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvomxilclient.so:system/lib/libnvomxilclient.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvmm_logger.so:system/lib/libnvmm_logger.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libcgdrv.so:system/lib/libcgdrv.so \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgdrm.so:system/lib/liblgdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvmm_audio.so:system/lib/libnvmm_audio.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvmm_contentpipe.so:system/lib/libnvmm_contentpipe.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvmm_image.so:system/lib/libnvmm_image.so \\
