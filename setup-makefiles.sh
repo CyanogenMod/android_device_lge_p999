@@ -119,7 +119,7 @@ PRODUCT_COPY_FILES += \\
 PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/etc/flex/flex.db:system/etc/flex/flex.db \\
     vendor/__VENDOR__/__DEVICE__/proprietary/etc/flex/flex.xml:system/etc/flex/flex.xml \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/BCM4329B1_002.002.023.0735.0745.hcd:system/etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd:system/etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/lge_signaling_d:system/bin/lge_signaling_d \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/motion:system/bin/motion \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvrm_daemon:system/bin/nvrm_daemon \\
@@ -168,6 +168,7 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvddk_audiofx.so:system/lib/libnvddk_audiofx.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvodm_query.so:system/lib/libnvodm_query.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvodm_misc.so:system/lib/libnvodm_misc.so \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvodm_dtvtuner.so:system/lib/libnvodm_dtvtuner.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvrm_channel.so:system/lib/libnvrm_channel.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvdispatch_helper.so:system/lib/libnvdispatch_helper.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvomxilclient.so:system/lib/libnvomxilclient.so \\

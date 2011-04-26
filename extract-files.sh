@@ -19,6 +19,7 @@ DEVICE=star-common
 
 rm -rf ../../../vendor/$VENDOR/$DEVICE
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/firmware
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/wl
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/lib/egl
@@ -56,7 +57,7 @@ adb pull /system/lib/libstagefrighthw.so ../../../vendor/$VENDOR/$DEVICE/proprie
 adb pull /system/lib/libbridge.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/etc/flex/flex.db ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 adb pull /system/etc/flex/flex.xml ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
-adb pull /system/bin/BCM4329B1_002.002.023.0735.0745.hcd ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+adb pull /system/etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/firmware
 adb pull /system/bin/lge_signaling_d ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/motion ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/nvrm_daemon ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
