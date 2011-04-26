@@ -15,7 +15,7 @@
 # limitations under the License.
 
 VENDOR=lge
-DEVICE=star-common
+DEVICE=p999
 
 rm -rf ../../../vendor/$VENDOR/$DEVICE
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
