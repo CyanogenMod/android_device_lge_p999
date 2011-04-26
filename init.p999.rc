@@ -381,6 +381,8 @@ on boot
     chown system system /sys/devices/platform/tegra_gyro_accel/flip_onoff
     chown system system /sys/devices/platform/tegra_gyro_accel/tilt_delay
     chown system system /sys/devices/platform/tegra_gyro_accel/bootcomplete
+    chown system system /sys/devices/platform/star_aat2870.0/lsensor_onoff
+    chown system system /sys/devices/platform/star_aat2870.0/alc
 
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
