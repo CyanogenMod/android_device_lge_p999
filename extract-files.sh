@@ -30,6 +30,7 @@ adb pull /system/lib/hw/gralloc.tegra.so ../../../vendor/$VENDOR/$DEVICE/proprie
 adb pull /system/lib/hw/lights.tegra.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib/hw
 adb pull /system/lib/hw/overlay.tegra.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib/hw
 adb pull /system/lib/hw/sensors.tegra.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib/hw
+adb pull /system/lib/hw/gps.tegra.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib/hw
 
 # EGL
 adb pull /system/lib/egl/libEGL_tegra.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib/egl
@@ -41,9 +42,6 @@ adb pull /system/etc/wl/nvram.txt ../../../vendor/$VENDOR/$DEVICE/proprietary/et
 adb pull /system/etc/wl/rtecdc-apsta.bin ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/wl
 adb pull /system/etc/wl/rtecdc-mfgtest.bin ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/wl
 adb pull /system/etc/wl/rtecdc.bin ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/wl
-
-# GPS
-adb pull /system/lib/liblge-gps.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 
 # OMX
 adb pull /system/etc/pvnvomx.cfg ../../../vendor/$VENDOR/$DEVICE/proprietary/etc
