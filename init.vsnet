@@ -1,0 +1,53 @@
+#!/system/bin/sh
+
+cid=$1
+ifaceid=$(($cid-1))
+
+VSNET_IP=`/system/bin/getprop net.pdp$cid.ip`
+GW_IP=`/system/bin/getprop net.vsnet$ifaceid.gw`
+
+case "$VSNET_IP" in
+    "" | "0.0.0.0")
+        /system/bin/log -t vsnet "IP address for cid=$cid is not set"
+        /system/bin/log -t vsnet "Stopping vsnet$ifaceid for cid=$cid"
+        
+        ifconfig vsnet$ifaceid 0.0.0.0 down || {
+            /system/bin/log -t vsnet "ifconfig for vsnet$ifaceid failed";
+            /system/bin/setprop "net.pdp$cid.svc_done" "0";
+            exit 1;
+        }
+
+        /system/bin/log -t vsnet "ifconfig for vsnet$ifaceid finished successfully";
+        /system/bin/setprop "net.vsnet$ifaceid.local-ip" ""
+        /system/bin/setprop "net.vsnet$ifaceid.remote-ip" ""
+        /system/bin/setprop net.interfaces.defaultroute ""
+        /system/bin/setprop "net.pdp$cid.svc_done" "1"
+    ;;
+
+    *)
+        /system/bin/log -t vsnet "IP address for cid=$cid is $VSNET_IP"
+        /system/bin/log -t vsnet "Starting vsnet$ifaceid for cid=$cid"
+        
+        ifconfig vsnet$ifaceid $VSNET_IP up || {
+            /system/bin/log -t vsnet "ifconfig for vsnet$ifaceid failed";
+            /system/bin/setprop "net.pdp$cid.svc_done" "0";
+            exit 1;
+        }
+
+        case "$GW_IP" in
+            "" | "0.0.0.0")
+                /system/bin/log -t vsnet "Default gateway for vsnet$ifaceid is not set"
+            ;;
+            *)
+                /system/bin/log -t vsnet "Default gateway for vsnet$ifaceid is $GW_IP"
+                route add default gw $GW_IP dev vsnet$ifaceid
+            ;;
+        esac
+
+        /system/bin/log -t vsnet "ifconfig for vsnet$ifaceid finished successfully";
+        /system/bin/setprop "net.vsnet$ifaceid.local-ip" $VSNET_IP
+        /system/bin/setprop "net.vsnet$ifaceid.remote-ip" $VSNET_IP
+        /system/bin/setprop net.interfaces.defaultroute gprs
+        /system/bin/setprop "net.pdp$cid.svc_done" "1"
+    ;;
+esac

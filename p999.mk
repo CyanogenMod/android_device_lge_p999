@@ -11,10 +11,10 @@ endif
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    device/lge/p999/init.p999.rc:root/init.rc
-
-PRODUCT_COPY_FILES += \
+    device/lge/p999/init.p999.rc:root/init.rc \
     device/lge/p999/vold.fstab:system/etc/vold.fstab \
+    device/lge/p999/gps.conf:system/etc/gps.conf \
+    device/lge/p999/init.vsnet:system/bin/init.vsnet
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
