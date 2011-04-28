@@ -9,6 +9,8 @@ else
 	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
+DEVICE_PACKAGE_OVERLAYS += device/lge/p999/overlay
+
 # Board-specific init
 PRODUCT_COPY_FILES += \
     device/lge/p999/init.p999.rc:root/init.rc \
