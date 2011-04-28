@@ -100,8 +100,6 @@ PRODUCT_COPY_FILES += \\
 
 # OMX
 PRODUCT_COPY_FILES += \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/etc/pvnvomx.cfg:system/etc/pvnvomx.cfg \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libpvnvomx.so:system/lib/libpvnvomx.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libdivxdrm.so:system/lib/libdivxdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge_divxdrm.so:system/lib/liblge_divxdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libhwmediaplugin.so:system/lib/libhwmediaplugin.so \\
@@ -161,7 +159,6 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvmm.so:system/lib/libnvmm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvdispmgr_d.so:system/lib/libnvdispmgr_d.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvdispmgr_d.so:obj/lib/libnvdispmgr_d.so \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblvvil.so:system/lib/liblvvil.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvddk_audiofx.so:system/lib/libnvddk_audiofx.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvodm_query.so:system/lib/libnvodm_query.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvodm_misc.so:system/lib/libnvodm_misc.so \\
