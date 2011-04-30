@@ -568,7 +568,7 @@ service wpa_supplicant /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wi
     disabled
     oneshot
 
-service dhcpcd /system/bin/dhcpcd -BKA wlan0  # LGE_AUTO_IP - enable IPv4LL & ARP (DLNA, 2010.10.19)
+service dhcpcd_wlan0 /system/bin/dhcpcd -BKA wlan0  # LGE_AUTO_IP - enable IPv4LL & ARP (DLNA, 2010.10.19)
     disabled
     oneshot
 
