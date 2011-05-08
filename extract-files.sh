@@ -18,6 +18,7 @@ VENDOR=lge
 DEVICE=p999
 
 rm -rf ../../../vendor/$VENDOR/$DEVICE
+mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/app
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/firmware
 mkdir -p ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
@@ -123,5 +124,11 @@ adb pull /system/lib/libnvwsi.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libaudio.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libaudiopolicy.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libaudio.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+
+# Wi-Fi Calling
+adb pull /system/app/Kineto.apk ../../../vendor/$VENDOR/$DEVICE/proprietary/app
+adb pull /system/lib/libganril.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/libkineto.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/librilswitch.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 
 ./setup-makefiles.sh

@@ -182,6 +182,13 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvomx.so:system/lib/libnvomx.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvwsi.so:system/lib/libnvwsi.so
 
+# Wi-Fi Calling
+PRODUCT_COPY_FILES += \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/app/Kineto.apk:system/app/Kineto.apk \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libganril.so:system/lib/libganril.apk \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libkineto.so:system/lib/libkineto.apk \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/librilswitch.so:system/lib/librilswitch.so
+
 EOF
 
 (cat << EOF) | sed s/__DEVICE__/$DEVICE/g | sed s/__VENDOR__/$VENDOR/g > ../../../vendor/$VENDOR/$DEVICE/BoardConfigVendor.mk
