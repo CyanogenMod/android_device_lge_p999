@@ -601,13 +601,6 @@ service dumpstate /system/bin/dumpstate -s
     disabled
     oneshot
 
-# LGE_SIGNALING START
-service signaling_c /system/bin/lge_signaling_d -d /dev/pts18
-    socket lge_signaling stream 660 radio system
-    user radio
-    group radio cache inet misc
-# LGE_SIGNALING END
-
 #100725, gunwoo1.kim@lge.com, HDMI daemon [START]
 service hdmid /system/bin/hdmid
     user system
