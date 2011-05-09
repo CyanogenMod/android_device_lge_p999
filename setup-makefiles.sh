@@ -185,8 +185,8 @@ PRODUCT_COPY_FILES += \\
 # Wi-Fi Calling
 PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/app/Kineto.apk:system/app/Kineto.apk \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libganril.so:system/lib/libganril.apk \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libkineto.so:system/lib/libkineto.apk \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libganril.so:system/lib/libganril.so \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libkineto.so:system/lib/libkineto.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/librilswitch.so:system/lib/librilswitch.so
 
 EOF
