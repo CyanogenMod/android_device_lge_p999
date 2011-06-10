@@ -124,6 +124,10 @@ adb pull /system/lib/libnvwsi.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libaudio.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libaudiopolicy.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libaudio.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/liblgeswcodecs.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/liblgemmevrc.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/liblgemmqcelp.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/liblgemmec3.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 
 # Wi-Fi Calling
 adb pull /system/app/Kineto.apk ../../../vendor/$VENDOR/$DEVICE/proprietary/app
