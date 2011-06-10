@@ -119,6 +119,9 @@ loglevel 3
     # 5.0 %
     write /dev/cpuctl/bg_non_interactive/cpu.shares 52
 
+on early-init
+    start hwprops
+
 on fs
 # mount partitions
     mount ext3 /dev/block/mmcblk0p1 /system barrier=1 wait 
@@ -623,4 +626,8 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --enable_lpm \
     user bluetooth
     group bluetooth net_bt_admin
     disabled
+
+service hwprops /sbin/hwprops
+    disabled
+    oneshot
 
