@@ -22,6 +22,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
     $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
 
+PRODUCT_PACKAGES += \
+    lights.p999
+
 PRODUCT_NAME := lge_p999
 PRODUCT_DEVICE := p999
 PRODUCT_MODEL := LG-P999
