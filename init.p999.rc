@@ -637,3 +637,7 @@ service hwprops /sbin/hwprops
     disabled
     oneshot
 
+service secureclockd /system/bin/secureclockd
+    oneshot
+    user system
+    group system
