@@ -624,6 +624,10 @@ service nvrm_daemon /system/bin/nvrm_daemon
     user root
     #onrestart restart servicemanager
 
+service swap_on_service /system/bin/sh /system/bin/swap_enable.sh
+	user root
+	oneshot
+
 on property:dev.bootcomplete=1
     start hdmid
 

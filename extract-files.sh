@@ -82,6 +82,9 @@ adb pull /system/bin/nvddk_audiofx_transport.axf ../../../vendor/$VENDOR/$DEVICE
 adb pull /system/bin/nvddk_audiofx_core.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/hdmid ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/bridgeutil ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+adb pull /system/bin/rzscontrol ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+adb pull /system/bin/swapon ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+adb pull /system/bin/swap_enable.sh ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/lib/libril.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvos.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib

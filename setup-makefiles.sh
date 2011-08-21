@@ -140,6 +140,9 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvddk_audiofx_core.axf:system/bin/nvddk_audiofx_core.axf \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/hdmid:system/bin/hdmid \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/bridgeutil:system/bin/bridgeutil \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/bin/rzscontrol:system/bin/rzscontrol \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/bin/swapon:system/bin/swapon \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/bin/swap_enable.sh:system/bin/swap_enable.sh \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libril.so:system/lib/libril.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvos.so:system/lib/libnvos.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvrm.so:system/lib/libnvrm.so \\
