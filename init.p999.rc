@@ -642,3 +642,13 @@ service secureclockd /system/bin/secureclockd
     oneshot
     user system
     group system
+
+service incall-audio /system/bin/incall-audio
+    disabled
+    oneshot
+
+on property:ril.call.status=1
+    start incall-audio
+
+on property:ril.call.status=0
+    stop incall-audio
