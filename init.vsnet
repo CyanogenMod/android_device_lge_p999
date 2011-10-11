@@ -18,6 +18,8 @@ case "$VSNET_IP" in
         }
 
         /system/bin/log -t vsnet "ifconfig for vsnet$ifaceid finished successfully";
+        /system/bin/setprop "net.vsnet$ifaceid.ip" ""
+        /system/bin/setprop "net.vsnet$ifaceid.gw" ""
         /system/bin/setprop "net.vsnet$ifaceid.local-ip" ""
         /system/bin/setprop "net.vsnet$ifaceid.remote-ip" ""
         /system/bin/setprop net.interfaces.defaultroute ""
@@ -25,6 +27,9 @@ case "$VSNET_IP" in
     ;;
 
     *)
+        /system/bin/setprop "net.vsnet$ifaceid.ip" $VSNET_IP
+        /system/bin/setprop "net.vsnet$ifaceid.gw" $VSNET_IP
+
         /system/bin/log -t vsnet "IP address for cid=$cid is $VSNET_IP"
         /system/bin/log -t vsnet "Starting vsnet$ifaceid for cid=$cid"
         
@@ -34,15 +39,15 @@ case "$VSNET_IP" in
             exit 1;
         }
 
-        case "$GW_IP" in
-            "" | "0.0.0.0")
-                /system/bin/log -t vsnet "Default gateway for vsnet$ifaceid is not set"
-            ;;
-            *)
-                /system/bin/log -t vsnet "Default gateway for vsnet$ifaceid is $GW_IP"
-                route add default gw $GW_IP dev vsnet$ifaceid
-            ;;
-        esac
+        # case "$GW_IP" in
+        #     "" | "0.0.0.0")
+        #         /system/bin/log -t vsnet "Default gateway for vsnet$ifaceid is not set"
+        #     ;;
+        #     *)
+        #         /system/bin/log -t vsnet "Default gateway for vsnet$ifaceid is $GW_IP"
+        #         route add default gw $GW_IP dev vsnet$ifaceid
+        #     ;;
+        # esac
 
         /system/bin/log -t vsnet "ifconfig for vsnet$ifaceid finished successfully";
         /system/bin/setprop "net.vsnet$ifaceid.local-ip" $VSNET_IP
