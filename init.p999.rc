@@ -652,3 +652,8 @@ on property:ril.call.status=1
 
 on property:ril.call.status=0
     stop incall-audio
+
+## Avoid receiving the power-off from the framework
+## to prevent radio init issues in the next boot
+on property:sys.shutdown.requested=1
+    stop ril-daemon
