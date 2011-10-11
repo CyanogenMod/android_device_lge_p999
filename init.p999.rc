@@ -657,3 +657,5 @@ on property:ril.call.status=0
 ## to prevent radio init issues in the next boot
 on property:sys.shutdown.requested=1
     stop ril-daemon
+on property:sys.shutdown.requested=1recovery
+    stop ril-daemon
