@@ -99,6 +99,7 @@ PRODUCT_COPY_FILES += \\
 
 # OMX
 PRODUCT_COPY_FILES += \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgdrm.so:system/lib/liblgdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libdivxdrm.so:system/lib/libdivxdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblge_divxdrm.so:system/lib/liblge_divxdrm.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libhwmediaplugin.so:system/lib/libhwmediaplugin.so \\
@@ -139,7 +140,7 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvddk_audiofx_transport.axf:system/bin/nvddk_audiofx_transport.axf \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/nvddk_audiofx_core.axf:system/bin/nvddk_audiofx_core.axf \\
     vendor/__VENDOR__/__DEVICE__/proprietary/bin/hdmid:system/bin/hdmid \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/bin/bridgeutil:system/bin/bridgeutil \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/bin/lgdrmserver:system/bin/lgdrmserver \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libril.so:system/lib/libril.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvos.so:system/lib/libnvos.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvrm.so:system/lib/libnvrm.so \\
@@ -183,7 +184,9 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgeswcodecs.so:system/lib/liblgeswcodecs.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgemmevrc.so:system/lib/liblgemmevrc.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgemmqcelp.so:system/lib/liblgemmqcelp.so \\
-    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgemmec3.so:system/lib/liblgemmec3.so
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblgemmec3.so:system/lib/liblgemmec3.so \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/libnvodm_hdmi.so:system/lib/libnvodm_hdmi.so \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/lib/liblvvil.so:system/lib/liblvvil.so
 
 # Wi-Fi Calling
 PRODUCT_COPY_FILES += \\

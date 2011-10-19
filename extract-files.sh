@@ -44,6 +44,7 @@ adb pull /system/etc/wl/rtecdc-mfgtest.bin ../../../vendor/$VENDOR/$DEVICE/propr
 adb pull /system/etc/wl/rtecdc.bin ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/wl
 
 # OMX
+adb pull /system/lib/liblgdrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libdivxdrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/liblge_divxdrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvodm_dtvtuner.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
@@ -51,7 +52,6 @@ adb pull /system/lib/libhwmediaplugin.so ../../../vendor/$VENDOR/$DEVICE/proprie
 adb pull /system/lib/libhwmediarecorder.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libsecureclock.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libstagefrighthw.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
-adb pull /system/lib/libbridge.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/etc/flex/flex.db ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 adb pull /system/etc/flex/flex.xml ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/flex
 adb pull /system/etc/firmware/BCM4329B1_002.002.023.0735.0745.hcd ../../../vendor/$VENDOR/$DEVICE/proprietary/etc/firmware
@@ -81,7 +81,7 @@ adb pull /system/bin/nvmm_aacdec.axf ../../../vendor/$VENDOR/$DEVICE/proprietary
 adb pull /system/bin/nvddk_audiofx_transport.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/nvddk_audiofx_core.axf ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/bin/hdmid ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
-adb pull /system/bin/bridgeutil ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
+adb pull /system/bin/lgdrmserver ../../../vendor/$VENDOR/$DEVICE/proprietary/bin
 adb pull /system/lib/libril.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvos.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/libnvrm.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
@@ -127,6 +127,8 @@ adb pull /system/lib/liblgeswcodecs.so ../../../vendor/$VENDOR/$DEVICE/proprieta
 adb pull /system/lib/liblgemmevrc.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/liblgemmqcelp.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/liblgemmec3.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/libnvodm_hdmi.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
+adb pull /system/lib/liblvvil.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 
 # Wi-Fi Calling
 adb pull /system/app/Kineto.apk ../../../vendor/$VENDOR/$DEVICE/proprietary/app
