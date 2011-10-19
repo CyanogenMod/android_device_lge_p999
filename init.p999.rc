@@ -51,9 +51,7 @@ loglevel 3
     mkdir /system 0771 root root
     mkdir /data 0771 system system
 
-## JAEWOO BLUETOOTH
-    mkdir /nvdb 0770 net_bt_admin net_bt_admin
-## JAEWOO BLUETOOTH
+    mkdir /lgdrm 0770 system audio
 
     mkdir /cache 0770 system cache
     mkdir /config 0500 root root
@@ -133,9 +131,7 @@ on fs
     mount ext4 /dev/block/mmcblk0p2 /cache nosuid nodev noatime wait
     chown system cache /cache
     chmod 0770 /cache
-    mount ext3 /dev/block/mmcblk0p6 /nvdb nosuid nodev barrier=1 wait
-    chown net_bt_admin net_bt_admin /nvdb
-    chmod 0770 /nvdb
+    mount ext3 /dev/block/mmcblk0p6 /lgdrm nosuid nodev noatime
 
 on post-fs
     # once everything is setup, no need to modify /
@@ -255,6 +251,11 @@ on post-fs
 # 20101115, taein.kim@lge.com, make ringtone,alarm property directory [START]
     mkdir /data/audioprop 0777 system system
 # 20101115, taein.kim@lge.com, make ringtone,alarm property directory [END]
+
+    ## ANDY_PORTING LGDRM [lg-drm@lge.com 100401]
+    # create dirs if not exist
+    mkdir /data/lgdrm 0770 root root
+    mkdir /data/wmdrm 0770 root root
 
 on boot
 # basic network init
@@ -621,6 +622,10 @@ service hdmid /system/bin/hdmid
     group system
     disabled
 
+service lgdrm /system/bin/lgdrmserver
+    user root
+    group sdcard_rw radio
+
 service nvrm_daemon /system/bin/nvrm_daemon
     user root
     #onrestart restart servicemanager
@@ -642,16 +647,6 @@ service secureclockd /system/bin/secureclockd
     oneshot
     user system
     group system
-
-service incall-audio /system/bin/incall-audio
-    disabled
-    oneshot
-
-on property:ril.call.status=1
-    start incall-audio
-
-on property:ril.call.status=0
-    stop incall-audio
 
 ## Avoid receiving the power-off from the framework
 ## to prevent radio init issues in the next boot
