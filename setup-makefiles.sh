@@ -193,6 +193,10 @@ PRODUCT_COPY_FILES += \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/libkineto.so:system/lib/libkineto.so \\
     vendor/__VENDOR__/__DEVICE__/proprietary/lib/librilswitch.so:system/lib/librilswitch.so
 
+# GPS
+PRODUCT_COPY_FILES += \\
+    vendor/__VENDOR__/__DEVICE__/proprietary/etc/SuplRootCert:system/etc/SuplRootCert
+
 EOF
 
 (cat << EOF) | sed s/__DEVICE__/$DEVICE/g | sed s/__VENDOR__/$VENDOR/g > ../../../vendor/$VENDOR/$DEVICE/BoardConfigVendor.mk
