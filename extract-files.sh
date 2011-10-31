@@ -136,7 +136,4 @@ adb pull /system/lib/libganril.so ../../../vendor/$VENDOR/$DEVICE/proprietary/li
 adb pull /system/lib/libkineto.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 adb pull /system/lib/librilswitch.so ../../../vendor/$VENDOR/$DEVICE/proprietary/lib
 
-# GPS
-adb pull /system/etc/SuplRootCert ../../../vendor/$VENDOR/$DEVICE/proprietary/etc
-
 ./setup-makefiles.sh
