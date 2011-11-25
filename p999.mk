@@ -13,7 +13,8 @@ DEVICE_PACKAGE_OVERLAYS += device/lge/p999/overlay
 
 # Board-specific init
 PRODUCT_COPY_FILES += \
-    device/lge/p999/init.p999.rc:root/init.rc \
+    device/lge/p999/init.p999.rc:root/init.p999.rc \
+    $(LOCAL_PATH)/ueventd.rc:root/ueventd.rc \
     device/lge/p999/vold.fstab:system/etc/vold.fstab \
     device/lge/p999/gps.conf:system/etc/gps.conf \
     device/lge/p999/init.vsnet:system/bin/init.vsnet
@@ -22,6 +23,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
     $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
 
-PRODUCT_NAME := lge_p999
+PRODUCT_PACKAGES += \
+    lights.p999 \
+    audio.primary.p999
+    #audio_policy.p999
+
+PRODUCT_NAME := full_p999
 PRODUCT_DEVICE := p999
 PRODUCT_MODEL := LG-P999
