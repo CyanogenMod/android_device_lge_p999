@@ -452,6 +452,12 @@ on property:persist.service.adb.enable=1
 on property:persist.service.adb.enable=0
     stop adbd
 
+on property:service.adb.tcp.port=5555
+    restart adbd
+
+on property:service.adb.tcp.port=-1
+    restart adbd
+
 service servicemanager /system/bin/servicemanager
     user system
     critical
@@ -567,6 +573,12 @@ service opush /system/bin/sdptool add --channel=12 OPUSH
     oneshot
 
 service pbap /system/bin/sdptool add --channel=19 PBAP
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service map /system/bin/sdptool add --channel=16 MAS
     user bluetooth
     group bluetooth net_bt_admin
     disabled
