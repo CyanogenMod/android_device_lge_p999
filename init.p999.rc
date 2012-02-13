@@ -124,12 +124,7 @@ on boot
     write /sys/class/rfkill/rfkill0/state 0
 ### End of LGE bluetooth
 
-### LGE GPS
-# gps permissions
-    mkdir /data/cache
-    chmod 777 /data/cache
-
-### End of LGE GPS
+    chmod 0644 /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
