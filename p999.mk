@@ -20,7 +20,8 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko
+    $(LOCAL_PATH)/prebuilt/wireless.ko:system/lib/modules/wireless.ko \
+    $(LOCAL_PATH)/prebuilt/test-baseband:system/bin/test-baseband
 
 PRODUCT_NAME := lge_p999
 PRODUCT_DEVICE := p999

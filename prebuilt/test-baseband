@@ -1,0 +1,23 @@
+#!/system/bin/sh
+
+sleep 10
+if [ -f /system/etc/bb-switched ]; then
+  exit
+fi
+
+BBMATCH=$(getprop gsm.version.baseband | grep "JUL 15 2011")
+
+if [ "$BBMATCH" = "" ]; then
+  exit
+fi
+
+echo "DO IT!"
+
+/system/xbin/busybox mount -o remount,rw /system
+cd /
+tar -xf /system/etc/firmware/older-radio.tar
+touch /system/etc/bb-switched
+sync
+/system/xbin/busybox mount -o remount,ro /system
+sync
+reboot
