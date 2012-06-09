@@ -166,6 +166,11 @@ service motion /system/bin/motion
 on property:dev.bootcomplete=1
     start hdmid
     start motion
+    start bbtest
+
+service bbtest /system/bin/test-baseband
+    oneshot
+    disabled
 
 service rawip_vsnet1 /system/bin/init.vsnet 1
    user root
