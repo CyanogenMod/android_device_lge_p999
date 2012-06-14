@@ -5,7 +5,7 @@ if [ -f /system/etc/bb-switched ]; then
   exit
 fi
 
-BBMATCH=$(getprop gsm.version.baseband | grep "JUL 15 2011")
+BBMATCH=$(getprop gsm.version.baseband | grep "JUL .. 2011")
 
 if [ "$BBMATCH" = "" ]; then
   exit
